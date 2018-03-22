@@ -3,7 +3,9 @@ import logging
 import time
 import psutil
 import uuid
-from iotSupport import getConfig, Adafruit_DHT, pi_h_status, dict_formatter, pushData
+import sys
+import Adafruit_DHT
+from iotSupport import getConfig, pi_h_status, dict_formatter, pushData
 
 
 
@@ -31,7 +33,9 @@ def main():
     while True:
 
         if len(dhtConfig) > 1:
-            humidity, temperature, outTime = Adafruit_DHT.read_retry(dhtConfig['onedevicetype'], dhtConfig['onegpiopin'])
+            #humidity, temperature, outTime = Adafruit_DHT.read_retry(dhtConfig['onedevicetype'], dhtConfig['onegpiopin'])
+            humidity, temperature = Adafruit_DHT.read_retry(dhtConfig['onedevicetype'], dhtConfig['onegpiopin'])
+            outTime =int(time.time())
 
             therm_values = ["SensorRead", outTime, dhtConfig['onelabel'], humidity, temperature,uuid.getnode()]
             formatResult = dict_formatter.add_to_dict(therm_labels,therm_values)

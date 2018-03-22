@@ -1,4 +1,6 @@
+import sys
 
+import Adafruit_DHT
 import time
 
 def read_retry(sensorVersion,GPIOpin):
