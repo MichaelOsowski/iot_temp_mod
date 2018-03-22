@@ -34,7 +34,7 @@ def main():
 
         if len(dhtConfig) > 1:
             #humidity, temperature, outTime = Adafruit_DHT.read_retry(dhtConfig['onedevicetype'], dhtConfig['onegpiopin'])
-            humidity, temperature = Adafruit_DHT.read_retry(dhtConfig['onedevicetype'], dhtConfig['onegpiopin'])
+            humidity, temperature = Adafruit_DHT.read_retry(int(dhtConfig['onedevicetype']), int(dhtConfig['onegpiopin']))
             outTime =int(time.time())
 
             therm_values = ["SensorRead", outTime, dhtConfig['onelabel'], humidity, temperature,uuid.getnode()]
