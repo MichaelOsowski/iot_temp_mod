@@ -31,7 +31,7 @@ def main():
     systemLog.info("Start")
 
     while True:
-
+# Get data from the DTH Temp Humidity Sensor
         if len(dhtConfig) > 1:
             #humidity, temperature, outTime = Adafruit_DHT.read_retry(dhtConfig['onedevicetype'], dhtConfig['onegpiopin'])
             humidity, temperature = Adafruit_DHT.read_retry(int(dhtConfig['onedevicetype']), int(dhtConfig['onegpiopin']))
@@ -42,26 +42,15 @@ def main():
             dataPush.append(formatResult)
             
             time.sleep(float(dhtConfig['onechkspeed']));
-            
-            if recordCount == int(nrConfig['samplesize']):
-                nrResponse = pushData.nrPost(nrConfig['nrurl'],nrConfig['nrinsertkey'],dataPush,systemLog)
+# Report to New Relic            
+            if len(nrConfig) > 1:
+                if recordCount == int(nrConfig['samplesize']):
+                    nrResponse = pushData.nrPost(nrConfig['nrurl'],nrConfig['nrinsertkey'],dataPush,systemLog)
+                    recordCount = 0;
+                    dataPush = []
                 
-                recordCount = 0;
-                dataPush = []
-                
-            recordCount = recordCount+1   
+        recordCount = recordCount+1   
     
-    
-    
-    
-        
-
-        
-        
-        
-    
-
-
-   
+ 
 main()
 
